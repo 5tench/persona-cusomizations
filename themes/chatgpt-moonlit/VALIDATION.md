@@ -12,3 +12,6 @@
 - Documentation reviewed against official Stylus and Userscripts installation documentation.
 
 Limits: no signed-in live ChatGPT visual verification or actual iOS device test was performed. Mock fixtures validate syntax and behavior, not current ChatGPT DOM coverage, image CSP, Safari rendering or GPU smoothness. The hosted image URL is intentionally a placeholder; hosting and installation remain user steps. A local background can still be blocked by browser security even with Stylus file access. Follow the guides' visual smoke checks after installation.
+
+## Collection migration
+Moved into persona-cusomizations/themes/chatgpt-moonlit, preserving Git history. Rebuilt both targets for the public HTTPS image URL. Earlier local-URL checks above describe the initial build; no file URL is used in the current generated installers.

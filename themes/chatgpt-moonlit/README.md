@@ -15,7 +15,7 @@ Deep navy, translucent sidebar/composer, muted blue user messages, transparent a
 - VALIDATION.md: checks and practical verification limits.
 
 ## Install
-Follow [desktop instructions](install/desktop.md) for Chrome/Edge + Stylus or [iOS instructions](install/ios.md) for Safari + Userscripts. The initial desktop output uses the temporary Windows file URL. iOS requires hosting; its placeholder deliberately uses HTTPS.
+Follow [desktop instructions](install/desktop.md) for Chrome/Edge + Stylus or [iOS instructions](install/ios.md) for Safari + Userscripts. Desktop and iOS outputs now use the hosted HTTPS image from this repository. The temporary local option remains available.
 
 ## One-value hosted switch
 Change imageUrl in theme.config.json from:
@@ -26,7 +26,7 @@ to your actual public raw image URL, then run:
 
     node scripts/build.mjs
 
-Reinstall generated outputs on every device. Use node scripts/build.mjs --local only for temporary desktop testing. Do not edit generated files: rebuilding overwrites them. The token in theme.css is build-time only; install generated files rather than raw theme.css. Generated copies are committed for easy installation without Node on a phone. No remote push or hosting is performed.
+Reinstall generated outputs on every device. Use node scripts/build.mjs --local only for temporary desktop testing. Do not edit generated files: rebuilding overwrites them. The token in theme.css is build-time only; install generated files rather than raw theme.css. Generated copies are committed for easy installation without Node on a phone. The public repository is https://github.com/5tench/persona-cusomizations.
 
 ## Readability and performance
 Change --mm-darkness to increase/decrease image darkness, --mm-blur for glass, --mm-text for brightness, --mm-accent for blue, and the alpha in --mm-user for bubble opacity. Desktop blur touches only the sidebar and composer; mobile lowers blur and avoids fixed-background painting. Reduced motion/transparency and no-backdrop-filter fallback are included. Image is cover-cropped on narrow screens. Choose ChatGPT Dark appearance for consistent default surfaces and syntax highlighting.

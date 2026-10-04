@@ -10,7 +10,7 @@
    The builder replaces the image token for each install target. */
 :root {
   color-scheme: dark;
-  --mm-image: url("file:///C:/Users/skully/Documents/persona-cusomizations/themes/chatgpt-moonlit/assets/moonlit_mountain_lake_panorama.png");
+  --mm-image: url("https://raw.githubusercontent.com/5tencH/persona-cusomizations/main/themes/chatgpt-moonlit/assets/moonlit_mountain_lake_panorama.png");
   --mm-darkness: .46; /* Higher = darker background, less mountain visibility. */
   --mm-blur: 10px; /* Glass blur; mobile reduces this to 4px. */
   --mm-text: #e6edf3; /* Text brightness. */
