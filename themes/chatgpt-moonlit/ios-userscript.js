@@ -1,0 +1,35 @@
+// ==UserScript==
+// @name Moonlit Mountain ChatGPT
+// @namespace moonlit-mountain.local
+// @version 1.0.0
+// @description Moonlit Mountain CSS, generated from theme.css
+// @match https://chatgpt.com/*
+// @run-at document-start
+// @grant none
+// ==/UserScript==
+(() => {
+  "use strict";
+  if (location.hostname !== "chatgpt.com" || location.protocol !== "https:") return;
+  const id = "moonlit-mountain-theme";
+  const css = "/* Canonical source. Run node scripts/build.mjs after edits.\n   The builder replaces the image token for each install target. */\n:root {\n  color-scheme: dark;\n  --mm-image: url(\"https://raw.githubusercontent.com/5tencH/persona-cusomizations/main/themes/chatgpt-moonlit/assets/moonlit_mountain_lake_panorama.png\");\n  --mm-darkness: .46; /* Higher = darker background, less mountain visibility. */\n  --mm-blur: 10px; /* Glass blur; mobile reduces this to 4px. */\n  --mm-text: #e6edf3; /* Text brightness. */\n  --mm-muted: #91a0b3;\n  --mm-accent: #7aa2f7; /* Accent color. */\n  --mm-sidebar: rgba(8,13,21,.78);\n  --mm-panel: rgba(13,20,31,.62);\n  --mm-border: rgba(255,255,255,.09);\n  --mm-user: rgba(67,104,160,.30); /* Last number = user bubble opacity. */\n  /* ChatGPT design tokens: opaque overlays, translucent conversation canvas. */\n  --bg-primary: transparent !important;\n  --bg-secondary: #101a29 !important;\n  --bg-tertiary: #182437 !important;\n  --main-surface-primary: transparent !important;\n  --main-surface-secondary: #101a29 !important;\n  --main-surface-tertiary: #182437 !important;\n  --sidebar-surface-primary: var(--mm-sidebar) !important;\n  --text-primary: var(--mm-text) !important;\n  --text-secondary: var(--mm-muted) !important;\n  --border-light: var(--mm-border) !important;\n}\nhtml { background: #0a0e17 !important; scroll-behavior: smooth; }\nbody {\n  color: var(--mm-text) !important;\n  background: linear-gradient(rgba(10,14,23,var(--mm-darkness)),rgba(10,14,23,var(--mm-darkness))), var(--mm-image) center / cover no-repeat fixed #0a0e17 !important;\n}\n/* Restrict canvas clearing to known app roots and conversation shell. */\nbody > #__next, body > #root, #thread, main#main, main:has(#thread),\n#thread > [data-testid=\"conversation-turns\"] { background-color: transparent !important; }\n#thread, [data-message-author-role] { color: var(--mm-text) !important; }\n/* Structural sidebar landmark; no global nav rule. */\n#stage-slideover-sidebar, #sidebar, [data-testid=\"sidebar\"],\nbody aside:has(a[href=\"/\"]) {\n  background: var(--mm-sidebar) !important;\n  border-right: 1px solid var(--mm-border);\n  -webkit-backdrop-filter: blur(var(--mm-blur));\n  backdrop-filter: blur(var(--mm-blur));\n  box-shadow: 4px 0 24px rgba(0,0,0,.16);\n}\n/* Named composer plus exact test-id fallbacks. Never every form. */\n#thread form:has(#prompt-textarea), main form:has(#prompt-textarea),\n[data-testid=\"composer\"] {\n  background: var(--mm-panel) !important;\n  border: 1px solid var(--mm-border) !important;\n  border-radius: 24px;\n  -webkit-backdrop-filter: blur(var(--mm-blur));\n  backdrop-filter: blur(var(--mm-blur));\n  box-shadow: 0 8px 24px rgba(0,0,0,.20);\n}\n#prompt-textarea { color: var(--mm-text) !important; background: transparent !important; caret-color: var(--mm-accent); }\n#prompt-textarea::placeholder { color: var(--mm-muted) !important; }\n[data-message-author-role=\"user\"] { background: var(--mm-user) !important; border: 1px solid var(--mm-border); border-radius: 18px; padding: .75rem 1rem; }\n[data-message-author-role=\"user\"] .user-message-bubble-color { background: transparent !important; }\n[data-message-author-role=\"assistant\"] { background: transparent !important; }\n[data-message-author-role] a { color: var(--mm-accent) !important; }\n[data-message-author-role] pre { background: #0c1421 !important; color: var(--mm-text); border: 1px solid var(--mm-border); border-radius: 12px; overflow-x: auto; }\n[data-message-author-role] :not(pre) > code { background: rgba(24,36,55,.85); color: var(--mm-text); border-radius: 4px; padding: .1em .25em; }\n/* Preserve solid surfaces for menus, uploads, settings and popovers. */\n[role=\"dialog\"], [role=\"alertdialog\"], [role=\"menu\"], [role=\"listbox\"],\n[data-radix-popper-content-wrapper] > *, [data-testid=\"file-upload-menu\"] {\n  background-color: #101a29 !important; color: var(--mm-text) !important;\n  border-color: var(--mm-border) !important;\n}\n#thread :focus-visible, #prompt-textarea:focus-visible { outline-color: var(--mm-accent); }\n#thread, #thread [class~=\"overflow-y-auto\"], [data-testid=\"sidebar\"] {\n  scrollbar-width: thin; scrollbar-color: #435571 transparent;\n  scroll-behavior: smooth;\n}\n#thread ::-webkit-scrollbar { width: 7px; height: 7px; }\n#thread ::-webkit-scrollbar-thumb { background: #435571; border-radius: 8px; }\n#thread ::-webkit-scrollbar-track { background: transparent; }\n@media (max-width: 767px) {\n  :root { --mm-blur: 4px; --mm-sidebar: rgba(8,13,21,.93); --mm-panel: rgba(13,20,31,.82); }\n  /* Avoid fixed-background repaint costs on mobile Safari. */\n  body { background-attachment: scroll !important; min-height: 100svh; }\n  #thread form:has(#prompt-textarea), main form:has(#prompt-textarea), [data-testid=\"composer\"] {\n    margin-bottom: env(safe-area-inset-bottom, 0px);\n    border-radius: 20px;\n  }\n}\n@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {\n  :root { --mm-sidebar: rgba(8,13,21,.94); --mm-panel: rgba(13,20,31,.90); }\n}\n@media (prefers-reduced-motion: reduce) {\n  html, #thread, #thread [class~=\"overflow-y-auto\"] { scroll-behavior: auto; }\n}\n@media (prefers-reduced-transparency: reduce) {\n  :root { --mm-blur: 0px; --mm-sidebar: #080d15; --mm-panel: #0d141f; --mm-user: #1e304a; }\n}\n\n";
+  function ensureStyle() {
+    if (!document.head) return;
+    let style = document.getElementById(id);
+    if (!style) { style = document.createElement("style"); style.id = id; document.head.appendChild(style); }
+    if (style.textContent !== css) style.textContent = css;
+  }
+  // Observe only head children. Chat body/streaming changes need no work.
+  function start() {
+    ensureStyle();
+    const key = "__moonlitMountainObserver";
+    if (window[key]) window[key].disconnect();
+    const observer = new MutationObserver(ensureStyle);
+    observer.observe(document.head, {childList: true});
+    window[key] = observer;
+  }
+  if (document.head) start();
+  else {
+    const boot = new MutationObserver(() => { if (document.head) { boot.disconnect(); start(); } });
+    boot.observe(document.documentElement || document, {childList: true, subtree: true});
+  }
+})();

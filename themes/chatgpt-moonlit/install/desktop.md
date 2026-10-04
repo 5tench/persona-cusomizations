@@ -5,14 +5,14 @@
 4. Alternatively open **moonlit.user.css** with Ctrl+O and use Stylus's Install style button. These two files contain identical CSS; install only one.
 5. For local-file import: open chrome://extensions/ (Chrome) or edge://extensions/ (Edge), find Stylus > Details, and enable **Allow access to file URLs**. You can also right-click Stylus > Manage extension.
 6. Reload ChatGPT. This initial build uses a TEMPORARY local image URL:
-   file:///C:/Users/skully/Documents/chatgpt-moonlit-theme/assets/moonlit_mountain_lake_panorama.png
+   file:///C:/Users/skully/Documents/persona-cusomizations/themes/chatgpt-moonlit/assets/moonlit_mountain_lake_panorama.png
 
 Important: file access allows Stylus to read local style files; it does not guarantee an HTTPS webpage can load a file:// background. Chromium security or page CSP may still block the image. If the glass/colors work but mountains do not, use the hosted HTTPS build below. Do not disable browser security.
 
 ## Switch to HTTPS (also required on Linux and other devices)
 Put the asset in your public GitHub repository (this project never pushes it). Edit only **imageUrl** in theme.config.json to the real raw HTTPS image URL. In PowerShell:
 
-    cd C:\Users\skully\Documents\chatgpt-moonlit-theme
+    cd C:\Users\skully\Documents\persona-cusomizations\themes\chatgpt-moonlit
     node scripts/build.mjs
 
 Replace the installed Stylus code with the newly generated stylus.css, or reinstall moonlit.user.css. Reinstall the iOS script too. Verify the image URL displays an image without login on each device. Other HTTPS image hosts work as well.
