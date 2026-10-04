@@ -93,3 +93,37 @@ body aside:has(a[href="/"]) {
   :root { --mm-blur: 0px; --mm-sidebar: #080d15; --mm-panel: #0d141f; --mm-user: #1e304a; }
 }
 
+
+/* Current app-shell/composer attributes, observed in the live browser.
+   These remain scoped to the shell and named composer, not arbitrary forms. */
+main[data-app-shell-main-surface="browser"] {
+  background-color: transparent !important;
+}
+aside[data-app-shell-left-panel-appearance] {
+  background: var(--mm-sidebar) !important;
+  border-right: 1px solid var(--mm-border);
+  -webkit-backdrop-filter: blur(var(--mm-blur));
+  backdrop-filter: blur(var(--mm-blur));
+}
+#app-shell-sidebar {
+  background-color: transparent !important;
+}
+#app-shell-sidebar [data-app-navigation-rail="true"] {
+  background-color: var(--mm-sidebar) !important;
+}
+form[data-chatgpt-composer] [data-composer-surface-variant] {
+  background: var(--mm-panel) !important;
+  border: 1px solid var(--mm-border) !important;
+  -webkit-backdrop-filter: blur(var(--mm-blur));
+  backdrop-filter: blur(var(--mm-blur));
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+form[data-chatgpt-composer] [data-composer-markdown] {
+  color: var(--mm-text) !important;
+  caret-color: var(--mm-accent);
+}
+@media (max-width: 767px) {
+  form[data-chatgpt-composer] {
+    margin-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
