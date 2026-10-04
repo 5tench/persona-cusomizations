@@ -1,0 +1,95 @@
+/* Canonical source. Run node scripts/build.mjs after edits.
+   The builder replaces the image token for each install target. */
+:root {
+  color-scheme: dark;
+  --mm-image: url("__MOONLIT_IMAGE_URL__");
+  --mm-darkness: .46; /* Higher = darker background, less mountain visibility. */
+  --mm-blur: 10px; /* Glass blur; mobile reduces this to 4px. */
+  --mm-text: #e6edf3; /* Text brightness. */
+  --mm-muted: #91a0b3;
+  --mm-accent: #7aa2f7; /* Accent color. */
+  --mm-sidebar: rgba(8,13,21,.78);
+  --mm-panel: rgba(13,20,31,.62);
+  --mm-border: rgba(255,255,255,.09);
+  --mm-user: rgba(67,104,160,.30); /* Last number = user bubble opacity. */
+  /* ChatGPT design tokens: opaque overlays, translucent conversation canvas. */
+  --bg-primary: transparent !important;
+  --bg-secondary: #101a29 !important;
+  --bg-tertiary: #182437 !important;
+  --main-surface-primary: transparent !important;
+  --main-surface-secondary: #101a29 !important;
+  --main-surface-tertiary: #182437 !important;
+  --sidebar-surface-primary: var(--mm-sidebar) !important;
+  --text-primary: var(--mm-text) !important;
+  --text-secondary: var(--mm-muted) !important;
+  --border-light: var(--mm-border) !important;
+}
+html { background: #0a0e17 !important; scroll-behavior: smooth; }
+body {
+  color: var(--mm-text) !important;
+  background: linear-gradient(rgba(10,14,23,var(--mm-darkness)),rgba(10,14,23,var(--mm-darkness))), var(--mm-image) center / cover no-repeat fixed #0a0e17 !important;
+}
+/* Restrict canvas clearing to known app roots and conversation shell. */
+body > #__next, body > #root, #thread, main#main, main:has(#thread),
+#thread > [data-testid="conversation-turns"] { background-color: transparent !important; }
+#thread, [data-message-author-role] { color: var(--mm-text) !important; }
+/* Structural sidebar landmark; no global nav rule. */
+#stage-slideover-sidebar, #sidebar, [data-testid="sidebar"],
+body aside:has(a[href="/"]) {
+  background: var(--mm-sidebar) !important;
+  border-right: 1px solid var(--mm-border);
+  -webkit-backdrop-filter: blur(var(--mm-blur));
+  backdrop-filter: blur(var(--mm-blur));
+  box-shadow: 4px 0 24px rgba(0,0,0,.16);
+}
+/* Named composer plus exact test-id fallbacks. Never every form. */
+#thread form:has(#prompt-textarea), main form:has(#prompt-textarea),
+[data-testid="composer"] {
+  background: var(--mm-panel) !important;
+  border: 1px solid var(--mm-border) !important;
+  border-radius: 24px;
+  -webkit-backdrop-filter: blur(var(--mm-blur));
+  backdrop-filter: blur(var(--mm-blur));
+  box-shadow: 0 8px 24px rgba(0,0,0,.20);
+}
+#prompt-textarea { color: var(--mm-text) !important; background: transparent !important; caret-color: var(--mm-accent); }
+#prompt-textarea::placeholder { color: var(--mm-muted) !important; }
+[data-message-author-role="user"] { background: var(--mm-user) !important; border: 1px solid var(--mm-border); border-radius: 18px; padding: .75rem 1rem; }
+[data-message-author-role="user"] .user-message-bubble-color { background: transparent !important; }
+[data-message-author-role="assistant"] { background: transparent !important; }
+[data-message-author-role] a { color: var(--mm-accent) !important; }
+[data-message-author-role] pre { background: #0c1421 !important; color: var(--mm-text); border: 1px solid var(--mm-border); border-radius: 12px; overflow-x: auto; }
+[data-message-author-role] :not(pre) > code { background: rgba(24,36,55,.85); color: var(--mm-text); border-radius: 4px; padding: .1em .25em; }
+/* Preserve solid surfaces for menus, uploads, settings and popovers. */
+[role="dialog"], [role="alertdialog"], [role="menu"], [role="listbox"],
+[data-radix-popper-content-wrapper] > *, [data-testid="file-upload-menu"] {
+  background-color: #101a29 !important; color: var(--mm-text) !important;
+  border-color: var(--mm-border) !important;
+}
+#thread :focus-visible, #prompt-textarea:focus-visible { outline-color: var(--mm-accent); }
+#thread, #thread [class~="overflow-y-auto"], [data-testid="sidebar"] {
+  scrollbar-width: thin; scrollbar-color: #435571 transparent;
+  scroll-behavior: smooth;
+}
+#thread ::-webkit-scrollbar { width: 7px; height: 7px; }
+#thread ::-webkit-scrollbar-thumb { background: #435571; border-radius: 8px; }
+#thread ::-webkit-scrollbar-track { background: transparent; }
+@media (max-width: 767px) {
+  :root { --mm-blur: 4px; --mm-sidebar: rgba(8,13,21,.93); --mm-panel: rgba(13,20,31,.82); }
+  /* Avoid fixed-background repaint costs on mobile Safari. */
+  body { background-attachment: scroll !important; min-height: 100svh; }
+  #thread form:has(#prompt-textarea), main form:has(#prompt-textarea), [data-testid="composer"] {
+    margin-bottom: env(safe-area-inset-bottom, 0px);
+    border-radius: 20px;
+  }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root { --mm-sidebar: rgba(8,13,21,.94); --mm-panel: rgba(13,20,31,.90); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html, #thread, #thread [class~="overflow-y-auto"] { scroll-behavior: auto; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  :root { --mm-blur: 0px; --mm-sidebar: #080d15; --mm-panel: #0d141f; --mm-user: #1e304a; }
+}
+
